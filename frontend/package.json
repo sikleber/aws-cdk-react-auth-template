@@ -1,5 +1,5 @@
 {
-  "name": "aws-react-frontend",
+  "name": "aws-react-auth-frontend",
   "version": "1.0.0",
   "description": "Frontend for the AWS React App Template",
   "main": "index.js",

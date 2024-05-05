@@ -1,4 +1,4 @@
-# aws-cdk-react-template
+# aws-cdk-react-auth-template
 
 This project is a template for creating a React application hosted on AWS and deployed using the AWS Cloud Development Kit (CDK).
 It consists of two TypeScript projects using NPM:

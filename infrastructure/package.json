@@ -1,5 +1,5 @@
 {
-  "name": "aws-cdk-react-app",
+  "name": "aws-cdk-react-auth-app",
   "version": "1.0.0",
   "bin": {
     "infrastructure": "src/app.ts"
