@@ -122,5 +122,5 @@ jobs:
         run: |
           FRONTEND_BUCKET_NAME=$(jq -r '.ReactAppStack.ReactAppDeploymentBucketName' cdk-outputs.json)
           CLOUDFRONT_DISTRIBUTION_ID=$(jq -r '.ReactAppStack.ReactAppDistributionId' cdk-outputs.json)
-          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          aws s3 sync dist s3://$FRONTEND_BUCKET_NAME --delete
           aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
