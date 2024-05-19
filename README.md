@@ -11,6 +11,7 @@ To enable the command `npm run serve` you need to create a `.env.dev` file in th
 COGNITO_USER_POOL_ID=<COGNITO_USER_POOL_ID>
 COGNITO_USER_POOL_CLIENT_ID=<COGNITO_USER_POOL_CLIENT_ID>
 ```
+For `npm run build` a similar `.env.build` file is required.
 
 ## Infrastructure Project
 See the [infrastructure package.json](infrastructure/package.json) for relevant scripts.

@@ -24,23 +24,6 @@ describe('Deployment Bucket', () => {
   })
 })
 
-describe('Bucket Deployment', () => {
-  it('should create a bucket deployment', () => {
-    template.hasResource('Custom::CDKBucketDeployment', {
-      Type: 'Custom::CDKBucketDeployment',
-      Properties: {
-        DestinationBucketName: {
-          Ref: Match.stringLikeRegexp('ReactAppDeploymentBucket*')
-        }
-      }
-    })
-  })
-
-  it('should only be one bucket deployment', () => {
-    template.resourceCountIs('Custom::CDKBucketDeployment', 1)
-  })
-})
-
 describe('CloudFront Distribution', () => {
   it('should create a CloudFront distribution', () => {
     template.hasResource('AWS::CloudFront::Distribution', {

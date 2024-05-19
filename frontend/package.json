@@ -8,7 +8,8 @@
     "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,css}' --config .prettierrc.json",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}' --ignore-path .gitignore",
     "test": "jest",
-    "build": " webpack --mode production",
+    "build": "NODE_ENV=build webpack --mode production",
+    "build:test": "NODE_ENV=test webpack --mode development",
     "serve": "NODE_ENV=dev webpack serve --open --mode development"
   },
   "author": "Simon Kleber",
