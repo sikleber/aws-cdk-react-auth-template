@@ -38,14 +38,16 @@ export class AuthStack extends cdk.Stack {
       userInvitation: {
         emailSubject: 'Invite to join our awesome app!',
         emailBody:
-          'Hello {username}, you have been invited to join our awesome app! ' +
-          'Your temporary password is {####}'
+          'Hello, you have been invited to join our awesome app!\n' +
+          'Username: {username}\n' +
+          'Temporary password: {####}\n' +
+          'Sign in here: {##Verify email##}'
       },
       userVerification: {
         emailSubject: 'Verify your email for our awesome app!',
         emailBody:
-          'Thanks for signing up to our awesome app! ' +
-          'Your verification code is {####}',
+          'Hello {username}, thanks for signing up to our awesome app! \n' +
+          'Verify your email here: {##Verify email##}',
         emailStyle: cognito.VerificationEmailStyle.LINK
       }
     })
