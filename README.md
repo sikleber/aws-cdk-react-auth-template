@@ -11,7 +11,7 @@ See the [infrastructure package.json](infrastructure/package.json) for relevant 
 
 Deploy the infrastructure using the following commands:
 ```bash
-npm run deploy -- --profile <profile> --region <region> --context config=dev
+cdk deploy --all --context config=dev --profile <profile> --region <region>
 ```
 
 The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execute your app.
