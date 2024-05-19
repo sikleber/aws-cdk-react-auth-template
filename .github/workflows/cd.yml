@@ -93,10 +93,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: cdk-outputs
-          path: frontend/cdk-outputs.json
+          path: frontend
 
       - name: Write .env.build File
         run: |
+          echo "CDK Outputs: $(cat cdk-outputs.json)"
           echo "COGNITO_USER_POOL_ID=$(jq -r '.AuthStack.CognitoUserPoolId' cdk-outputs.json)" > .env.build
           echo "COGNITO_USER_POOL_CLIENT_ID=$(jq -r '.AuthStack.CognitoUserPoolClientId' cdk-outputs.json)" >> .env.build
 
