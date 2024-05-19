@@ -8,8 +8,8 @@
     "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,css}' --config .prettierrc.json",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}' --ignore-path .gitignore",
     "test": "jest",
-    "build": "webpack --mode production",
-    "start": "webpack serve --open --mode development"
+    "build": " webpack --mode production",
+    "serve": "NODE_ENV=dev webpack serve --open --mode development"
   },
   "author": "Simon Kleber",
   "dependencies": {
@@ -24,6 +24,7 @@
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
+    "@types/dotenv-webpack": "^7.0.7",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
@@ -33,6 +34,7 @@
     "babel-jest": "^29.7.0",
     "babel-loader": "^9.1.3",
     "css-loader": "^7.1.1",
+    "dotenv-webpack": "^8.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",

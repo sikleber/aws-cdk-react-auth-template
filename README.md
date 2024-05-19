@@ -6,6 +6,12 @@ It consists of two TypeScript projects using NPM:
 ## Frontend Project
 See the [frontend package.json](frontend/package.json) for relevant scripts.
 
+To enable the command `npm run serve` you need to create a `.env.dev` file in the `frontend` directory with the following environment variables:
+```bash
+COGNITO_USER_POOL_ID=<COGNITO_USER_POOL_ID>
+COGNITO_USER_POOL_CLIENT_ID=<COGNITO_USER_POOL_CLIENT_ID>
+```
+
 ## Infrastructure Project
 See the [infrastructure package.json](infrastructure/package.json) for relevant scripts.
 

@@ -1,6 +1,7 @@
 import path from 'path'
 
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import Dotenv from 'dotenv-webpack'
 
 module.exports = {
   entry: './src/index.tsx',
@@ -43,6 +44,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
+    }),
+    new Dotenv({
+      path: `./.env.${process.env.NODE_ENV}`
     })
   ]
 }
