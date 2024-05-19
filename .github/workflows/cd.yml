@@ -50,13 +50,13 @@ jobs:
       - name: CDK Deploy
         run: |
           cdk deploy --all -vv --require-approval never -c config=dev -O cdk-outputs.json
-          echo "CDK Outputs: \n$(cat cdk-outputs.json)"
+          echo "CDK Outputs: $(cat cdk-outputs.json)"
 
       - name: Upload CDK Outputs
         uses: actions/upload-artifact@v4
         with:
           name: cdk-outputs
-          path: cdk-outputs.json
+          path: infrastructure/cdk-outputs.json
           retention-days: 1
           if-no-files-found: error
 
