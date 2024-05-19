@@ -5,9 +5,9 @@
     "infrastructure": "src/app.ts"
   },
   "scripts": {
-    "format": "prettier 'src/**/*.{js,jsx,ts,tsx,css}' --write --config .prettierrc.json",
-    "format:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx,css}' --config .prettierrc.json",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier '**/*.{js,jsx,ts,tsx,css}' --write --config .prettierrc.json",
+    "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,css}' --config .prettierrc.json",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}' --ignore-path .gitignore",
     "test": "jest",
     "build": "tsc",
     "bootstrap": "cdk bootstrap",
