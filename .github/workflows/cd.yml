@@ -60,6 +60,19 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
+      - name: Write CDK Outputs to summary
+        run: |
+          echo "## CDK Deployment Success! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "### Outputs Table" >> $GITHUB_STEP_SUMMARY
+          echo "| Stack | Key | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- | --- |" >> $GITHUB_STEP_SUMMARY
+          for stack in $(jq -r 'keys[]' cdk-outputs.json); do
+            for key in $(jq -r ".${stack} | keys[]" cdk-outputs.json); do
+              value=$(jq -r ".${stack}.${key}" cdk-outputs.json)
+              echo "| ${stack} | ${key} | ${value} |" >> $GITHUB_STEP_SUMMARY
+            done
+          done
+
   build-and-deploy-frontend:
     runs-on: ubuntu-latest
     needs: [ deploy-infrastructure ]
