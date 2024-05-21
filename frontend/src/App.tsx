@@ -1,30 +1,39 @@
-import React from 'react'
-import logo from './logo.svg'
+import React, { ReactElement } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
+import LoginPage from './pages/loginPage'
+import HomePage from './pages/homePage'
+import ConfirmUserPage from './pages/confirmUserPage'
 
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID
-const COGNITO_USER_POOL_CLIENT_ID = process.env.COGNITO_USER_POOL_CLIENT_ID
+const App: React.FunctionComponent = (): ReactElement => {
+  const isAuthenticated = (): boolean => {
+    const accessToken = sessionStorage.getItem('accessToken')
+    return !!accessToken
+  }
 
-function App(): JSX.Element {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>Cognito User Pool ID: {COGNITO_USER_POOL_ID}</p>
-        <p>Cognito User Pool Client ID: {COGNITO_USER_POOL_CLIENT_ID}</p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path='/'
+          element={
+            isAuthenticated() ? (
+              <Navigate replace to='/home' />
+            ) : (
+              <Navigate replace to='/login' />
+            )
+          }
+        />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/confirm' element={<ConfirmUserPage />} />
+        <Route
+          path='/home'
+          element={
+            isAuthenticated() ? <HomePage /> : <Navigate replace to='/login' />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

@@ -10,6 +10,7 @@ To enable the command `npm run serve` you need to create a `.env.dev` file in th
 ```bash
 COGNITO_USER_POOL_ID=<COGNITO_USER_POOL_ID>
 COGNITO_USER_POOL_CLIENT_ID=<COGNITO_USER_POOL_CLIENT_ID>
+COGNITO_REGION=<COGNITO_REGION>
 ```
 For `npm run build` a similar `.env.build` file is required.
 

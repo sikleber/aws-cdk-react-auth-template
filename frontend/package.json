@@ -14,8 +14,10 @@
   },
   "author": "Simon Kleber",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.577.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

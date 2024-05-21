@@ -44,6 +44,13 @@ describe('User Pool', () => {
       }
     })
   })
+  it('should output the stack region', () => {
+    template.hasOutput('CognitoRegion', {
+      Value: {
+        Ref: 'AWS::Region'
+      }
+    })
+  })
 })
 
 describe('User Pool Client', () => {

@@ -46,9 +46,9 @@ export class AuthStack extends cdk.Stack {
       userVerification: {
         emailSubject: 'Verify your email for our awesome app!',
         emailBody:
-          'Hello {username}, thanks for signing up to our awesome app! \n' +
-          'Verify your email here: {##Verify email##}',
-        emailStyle: cognito.VerificationEmailStyle.LINK
+          'Hello, thanks for signing up to our awesome app! \n' +
+          'Your verification code is: {####}\n',
+        emailStyle: cognito.VerificationEmailStyle.CODE
       }
     })
 
@@ -74,6 +74,9 @@ export class AuthStack extends cdk.Stack {
     })
     new cdk.CfnOutput(this, 'CognitoUserPoolClientId', {
       value: this.userPoolClient.userPoolClientId
+    })
+    new cdk.CfnOutput(this, 'CognitoRegion', {
+      value: this.region
     })
   }
 }
