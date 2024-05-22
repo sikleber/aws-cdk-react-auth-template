@@ -60,7 +60,7 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-      - name: Write CDK Outputs to summary
+      - name: Write CDK Outputs to Summary
         run: |
           echo "## CDK Deployment Success! :rocket:" >> $GITHUB_STEP_SUMMARY
           echo "### Outputs Table" >> $GITHUB_STEP_SUMMARY
@@ -72,6 +72,7 @@ jobs:
               echo "| ${stack} | ${key} | ${value} |" >> $GITHUB_STEP_SUMMARY
             done
           done
+          echo "" >> $GITHUB_STEP_SUMMARY
 
   build-and-deploy-frontend:
     runs-on: ubuntu-latest
@@ -138,3 +139,9 @@ jobs:
           CLOUDFRONT_DISTRIBUTION_ID=$(jq -r '.ReactAppStack.ReactAppDistributionId' cdk-outputs.json)
           aws s3 sync dist s3://$FRONTEND_BUCKET_NAME --delete
           aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+
+      - name: Write Frontend Deployment Success to Summary
+        run: |
+          CLOUDFRONT_DOMAIN=$(jq -r '.ReactAppStack.ReactAppDistributionDomainName' cdk-outputs.json)
+          echo "## Frontend Deployment Success! :sparkles:" >> $GITHUB_STEP_SUMMARY
+          echo "### Domain: $CLOUDFRONT_DOMAIN" >> $GITHUB_STEP_SUMMARY
