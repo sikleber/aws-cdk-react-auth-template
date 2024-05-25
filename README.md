@@ -1,7 +1,10 @@
 # aws-cdk-react-auth-template
 
 This project is a template for creating a React application hosted on AWS and deployed using the AWS Cloud Development Kit (CDK).
-It consists of two TypeScript projects using NPM:
+
+**Note:** Web app domain will be created within the GitHub Actions CD workflow and outputted to its summary.
+
+The application consists of two TypeScript projects using NPM:
 
 ## Frontend Project
 See the [frontend package.json](frontend/package.json) for relevant scripts.
@@ -14,6 +17,11 @@ COGNITO_REGION=<COGNITO_REGION>
 ```
 For `npm run build` a similar `.env.build` file is required.
 
+### Amplify Frontend SDK
+The frontend uses the [Amplify Frontend SDK](https://docs.amplify.aws/react/) to interact with the AWS Cognito User Pool and provide a basic authentication UI.
+
+See [Amplify Custom Configuration](https://docs.amplify.aws/react/reference/amplify_outputs/#custom-configuration) for more information on how to use the SDK without the Amplify CLI or Amplify Console.
+
 ## Infrastructure Project
 See the [infrastructure package.json](infrastructure/package.json) for relevant scripts.
 
@@ -25,7 +33,7 @@ cdk deploy --all --context config=dev --profile <profile> --region <region>
 The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execute your app.
 
 ### Infrastructure Overview
-<img alt="Infrastructure" src="docs/infrastructure.drawio.png" style="width: 50%;">
+<img alt="Infrastructure" src="docs/infrastructure.drawio.png" style="width: 50%; background-color: white;">
 
 ### Custom Configuration Settings
 The [infrastructure/config.ts](infrastructure/src/config.ts) reads the configuration specified by the `--context config=<CONFIG_NAME` parameter when deploying the CDK stack.
