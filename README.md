@@ -33,7 +33,7 @@ cdk deploy --all --context config=dev --profile <profile> --region <region>
 The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execute your app.
 
 ### Infrastructure Overview
-<img alt="Infrastructure" src="docs/infrastructure.drawio.png" style="width: 50%; background-color: white;">
+<img alt="Infrastructure" src="docs/infrastructure.drawio.png" style="width: 50%;">
 
 ### Custom Configuration Settings
 The [infrastructure/config.ts](infrastructure/src/config.ts) reads the configuration specified by the `--context config=<CONFIG_NAME` parameter when deploying the CDK stack.
