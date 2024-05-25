@@ -39,6 +39,8 @@ The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execut
 The [infrastructure/config.ts](infrastructure/src/config.ts) reads the configuration specified by the `--context config=<CONFIG_NAME` parameter when deploying the CDK stack.
 Defined settings can be passed to underlying constructs.
 
+So far this configuration only specifies the `removalPolicy` for AWS resources (see the [dev configuration](config/dev.json)).
+
 
 ## GitHub Actions CI/CD
 This project uses GitHub Actions for CI/CD. Two workflows are defined in the [.github/workflows](.github/workflows) directory:
