@@ -46,7 +46,7 @@ export class AuthStack extends cdk.Stack {
       userVerification: {
         emailSubject: 'Verify your email for our awesome app!',
         emailBody:
-          'Hello, thanks for signing up to our awesome app! \n' +
+          'Hello, thanks for signing up to our awesome app! ' +
           'Your verification code is: {####}\n',
         emailStyle: cognito.VerificationEmailStyle.CODE
       }

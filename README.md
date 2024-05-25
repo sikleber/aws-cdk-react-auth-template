@@ -45,3 +45,6 @@ Before the first deployment, you may need to bootstrap the CDK in your AWS accou
 ```bash
 npx cdk bootstrap aws://<account>/<region>
 ```
+
+The CDK outputs are displayed in the GitHub CD workflow run summary.
+There you also find the URL to the deployed application.

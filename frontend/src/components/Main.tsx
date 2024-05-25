@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import logo from '../logo.svg'
 
-const HomePage: React.FunctionComponent = (): ReactElement => {
+const Main: React.FunctionComponent = (): ReactElement => {
   return (
     <div className='App'>
       <header className='App-header'>
@@ -22,4 +22,4 @@ const HomePage: React.FunctionComponent = (): ReactElement => {
   )
 }
 
-export default HomePage
+export default Main
