@@ -43,5 +43,9 @@ export class BackendStack extends cdk.Stack {
         retention: config.logRetentionDays
       }
     })
+
+    new cdk.CfnOutput(this, 'AppGraphqlApiUrl', {
+      value: this.graphqlApi.graphqlUrl
+    })
   }
 }
