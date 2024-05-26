@@ -1,3 +1,4 @@
 {
-  "removalPolicy": "destroy"
+  "removalPolicy": "destroy",
+  "logRetentionDays": 14
 }

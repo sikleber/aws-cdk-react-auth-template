@@ -1,6 +1,7 @@
 # aws-cdk-react-auth-template
 
 This project is a template for creating a React application hosted on AWS and deployed using the AWS Cloud Development Kit (CDK).
+The application uses AWS Cognito for user authentication and authorization.
 
 **Note:** Web app domain will be created within the GitHub Actions CD workflow and outputted to its summary.
 

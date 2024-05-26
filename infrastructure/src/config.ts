@@ -2,10 +2,12 @@ import * as cdk from 'aws-cdk-lib'
 
 export interface AppConfig {
   readonly removalPolicy: cdk.RemovalPolicy
+  readonly logRetentionDays: number
 }
 
 const defaultAppConfig: AppConfig = {
-  removalPolicy: cdk.RemovalPolicy.RETAIN
+  removalPolicy: cdk.RemovalPolicy.RETAIN,
+  logRetentionDays: 14
 }
 
 /**

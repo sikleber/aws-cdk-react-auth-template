@@ -10,7 +10,8 @@ beforeAll(() => {
 describe('Config', () => {
   it('should equal test config', () => {
     expect(config).toEqual({
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      logRetentionDays: 14
     })
   })
 })
