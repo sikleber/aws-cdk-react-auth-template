@@ -1,5 +1,5 @@
 type Query {
-    _empty: String
+    getHello: String
 }
 
 schema {

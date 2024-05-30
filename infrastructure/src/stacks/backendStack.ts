@@ -3,12 +3,15 @@ import { Construct } from 'constructs'
 import { AppConfig } from '../config'
 import * as AppSync from 'aws-cdk-lib/aws-appsync'
 import { Visibility } from 'aws-cdk-lib/aws-appsync'
+import * as lambda from 'aws-cdk-lib/aws-lambda'
 import { AuthStack } from './authStack'
 
 const PROJECT_ROOT = `${__dirname}/../../..`
 
 export class BackendStack extends cdk.Stack {
   public readonly graphqlApi: AppSync.GraphqlApi
+  public readonly lambdaResolver: lambda.Function
+  public readonly lambdaDataSource: AppSync.LambdaDataSource
 
   constructor(
     scope: Construct,
@@ -44,8 +47,41 @@ export class BackendStack extends cdk.Stack {
       }
     })
 
+    this.lambdaResolver = new lambda.Function(this, 'LambdaResolver', {
+      runtime: lambda.Runtime.NODEJS_20_X,
+      handler: 'main.handler',
+      code: lambda.Code.fromInline(`
+        exports.handler = async (event, context) => {
+          const username = event.request.identity.username
+          return {
+            statusCode: 200,
+            body: JSON.stringify({ message: \`Hello, \${username}!\` })
+          }
+        }
+      `)
+    })
+
+    this.lambdaDataSource = this.graphqlApi.addLambdaDataSource(
+      'LambdaDataSource',
+      this.lambdaResolver
+    )
+
+    this.graphqlApi.createResolver('GetHelloResolver', {
+      dataSource: this.lambdaDataSource,
+      typeName: 'Query',
+      fieldName: 'getHello'
+    })
+
     new cdk.CfnOutput(this, 'AppGraphqlApiUrl', {
       value: this.graphqlApi.graphqlUrl
+    })
+
+    new cdk.CfnOutput(this, 'AppGraphqlApiKey', {
+      value: this.graphqlApi.apiKey || ''
+    })
+
+    new cdk.CfnOutput(this, 'AppGraphqlApiRegion', {
+      value: this.graphqlApi.env.region
     })
   }
 }
