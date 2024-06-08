@@ -33,7 +33,7 @@ export class BackendStack extends cdk.Stack {
           userPoolConfig: {
             userPool: authStack.userPool,
             appIdClientRegex: authStack.userPoolClient.userPoolClientId,
-            defaultAction: AppSync.UserPoolDefaultAction.DENY
+            defaultAction: AppSync.UserPoolDefaultAction.ALLOW // Allow default to authenticate users
           }
         }
       },
@@ -49,7 +49,7 @@ export class BackendStack extends cdk.Stack {
 
     this.lambdaResolver = new lambda.Function(this, 'LambdaResolver', {
       runtime: lambda.Runtime.NODEJS_20_X,
-      handler: 'main.handler',
+      handler: 'index.handler',
       code: lambda.Code.fromInline(`
         exports.handler = async (event, context) => {
           const username = event.request.identity.username

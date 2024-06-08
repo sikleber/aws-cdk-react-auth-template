@@ -15,6 +15,16 @@ if (!userPoolId || !userPoolClientId) {
   )
 }
 
+const graphqlEndpoint = process.env.GRAPHQL_API_ENDPOINT
+const graphqlRegion = process.env.GRAPHQL_API_REGION
+
+if (!graphqlEndpoint || !graphqlRegion) {
+  throw new Error(
+    'Missing environment variables GRAPHQL_API_ENDPOINT || ' +
+      'GRAPHQL_API_REGION'
+  )
+}
+
 Amplify.configure({
   Auth: {
     Cognito: {
@@ -33,6 +43,13 @@ Amplify.configure({
       },
       userAttributes: undefined,
       mfa: undefined
+    }
+  },
+  API: {
+    GraphQL: {
+      endpoint: graphqlEndpoint,
+      region: graphqlRegion,
+      defaultAuthMode: 'userPool'
     }
   }
 })

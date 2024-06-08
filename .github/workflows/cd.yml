@@ -114,6 +114,9 @@ jobs:
           echo "COGNITO_USER_POOL_ID=$(jq -r '.AuthStack.CognitoUserPoolId' cdk-outputs.json)" > .env.build
           echo "COGNITO_USER_POOL_CLIENT_ID=$(jq -r '.AuthStack.CognitoUserPoolClientId' cdk-outputs.json)" >> .env.build
           echo "COGNITO_REGION=$(jq -r '.AuthStack.CognitoRegion' cdk-outputs.json)" >> .env.build
+          echo "GRAPHQL_API_ENDPOINT=$(jq -r '.BackendStack.AppGraphqlApiUrl' cdk-outputs.json)" >> .env.build
+          echo "GRAPHQL_API_REGION=$(jq -r '.BackendStack.AppGraphqlApiRegion' cdk-outputs.json)" >> .env.build
+          
 
       - name: Build
         run: npm run build

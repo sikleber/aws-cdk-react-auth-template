@@ -8,6 +8,7 @@
     "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,css}' --config .prettierrc.json",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}' --ignore-path .gitignore",
     "test": "jest",
+    "codegen": "graphql-codegen",
     "build": "NODE_ENV=build webpack --mode production",
     "build:test": "NODE_ENV=test webpack --mode development",
     "serve": "NODE_ENV=dev webpack serve --open --mode development"
@@ -16,6 +17,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^6.1.12",
     "aws-amplify": "^6.3.4",
+    "graphql": "^16.8.1",
     "react": "^18.2.0"
   },
   "devDependencies": {
@@ -23,6 +25,9 @@
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.6",
+    "@parcel/watcher": "^2.4.1",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
