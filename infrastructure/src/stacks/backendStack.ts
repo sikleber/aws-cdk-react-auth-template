@@ -54,7 +54,6 @@ export class BackendStack extends cdk.Stack {
         exports.handler = async (event, context) => {
           const username = event.identity.username
           return \`Hello \${username} from backend handler!\`
-          }
         }
       `)
     })
