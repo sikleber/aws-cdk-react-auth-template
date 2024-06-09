@@ -52,7 +52,7 @@ export class BackendStack extends cdk.Stack {
       handler: 'index.handler',
       code: lambda.Code.fromInline(`
         exports.handler = async (event, context) => {
-          const username = event.request.identity.username
+          const username = event.identity.username
           return {
             statusCode: 200,
             body: JSON.stringify({ message: \`Hello, \${username}!\` })
