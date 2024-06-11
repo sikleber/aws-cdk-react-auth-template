@@ -1,32 +1,29 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import logo from '../logo.svg'
-import { generateClient } from 'aws-amplify/api'
+import './Main.css'
+import { useAuthenticator } from '@aws-amplify/ui-react'
+import { useLazyQuery } from '@apollo/client'
 import { GET_HELLO } from '../graphql/queries'
-import { Get_HelloQuery } from '../graphql/__generated__/graphql'
-
-const client = generateClient()
 
 const Main: React.FunctionComponent = (): ReactElement => {
-  const [helloStateTxt, setHelloStateTxt] = useState('Click the button!')
+  const { username } = useAuthenticator((context) => [context.user])
+  const [getHello, { error, data }] = useLazyQuery(GET_HELLO)
 
-  const handleClick = async (): Promise<void> => {
-    try {
-      const response = (await client.graphql({
-        query: GET_HELLO
-      })) as { data: Get_HelloQuery }
-      setHelloStateTxt(response.data.getHello)
-    } catch (error) {
-      console.error('Get hello failed:', error)
-    }
+  console.log('Main component rendered')
+
+  let helloTxt = 'Click the button to call the API'
+  if (error) {
+    helloTxt = `Error! ${error.message}`
+  } else if (data) {
+    helloTxt = data.getHello
   }
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>{helloStateTxt}</p>
-        <button onClick={handleClick}>Call API</button>
-      </header>
+    <div className='App-main'>
+      <h3>Hello {username}</h3>
+      <img src={logo} className='App-logo' alt='logo' />
+      <p>{helloTxt}</p>
+      <button onClick={() => getHello()}>Call API</button>
     </div>
   )
 }

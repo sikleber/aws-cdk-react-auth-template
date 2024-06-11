@@ -1,9 +1,20 @@
 import React, { ReactElement } from 'react'
 import '@aws-amplify/ui-react/styles.css'
 import './App.css'
-import { Amplify } from 'aws-amplify'
-import { Authenticator } from '@aws-amplify/ui-react'
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react'
 import Main from './components/Main'
+import Header from './components/Header'
+import {
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  InMemoryCache,
+  NormalizedCacheObject
+} from '@apollo/client'
+import { fetchAuthSession } from 'aws-amplify/auth'
+import { AUTH_TYPE, AuthOptions, createAuthLink } from 'aws-appsync-auth-link'
+import { Amplify } from 'aws-amplify'
+import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link'
 
 const userPoolId = process.env.COGNITO_USER_POOL_ID
 const userPoolClientId = process.env.COGNITO_USER_POOL_CLIENT_ID
@@ -12,16 +23,6 @@ if (!userPoolId || !userPoolClientId) {
   throw new Error(
     'Missing environment variables COGNITO_USER_POOL_ID || ' +
       'COGNITO_USER_POOL_CLIENT_ID'
-  )
-}
-
-const graphqlEndpoint = process.env.GRAPHQL_API_ENDPOINT
-const graphqlRegion = process.env.GRAPHQL_API_REGION
-
-if (!graphqlEndpoint || !graphqlRegion) {
-  throw new Error(
-    'Missing environment variables GRAPHQL_API_ENDPOINT || ' +
-      'GRAPHQL_API_REGION'
   )
 }
 
@@ -44,26 +45,73 @@ Amplify.configure({
       userAttributes: undefined,
       mfa: undefined
     }
-  },
-  API: {
-    GraphQL: {
-      endpoint: graphqlEndpoint,
-      region: graphqlRegion,
-      defaultAuthMode: 'userPool'
-    }
   }
 })
 
+const graphqlEndpoint = process.env.GRAPHQL_API_ENDPOINT
+const graphqlRegion = process.env.GRAPHQL_API_REGION
+
+if (!graphqlEndpoint || !graphqlRegion) {
+  throw new Error(
+    'Missing environment variables GRAPHQL_API_ENDPOINT || ' +
+      'GRAPHQL_API_REGION'
+  )
+}
+
+function getApolloClient(
+  accessToken: string
+): ApolloClient<NormalizedCacheObject> {
+  const auth: AuthOptions = {
+    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+    jwtToken: async () => accessToken
+  }
+
+  const config = {
+    url: graphqlEndpoint as string,
+    region: graphqlRegion as string,
+    auth: auth
+  }
+
+  const appsyncLink = ApolloLink.from([
+    createAuthLink(config),
+    createSubscriptionHandshakeLink(config)
+  ])
+
+  return new ApolloClient({
+    link: appsyncLink,
+    cache: new InMemoryCache(),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-first'
+      }
+    }
+  })
+}
+
 const App: React.FunctionComponent = (): ReactElement => {
+  const { authStatus } = useAuthenticator((context) => [context.authStatus])
+  const [accessToken, setAccessToken] = React.useState<string | undefined>()
+
+  console.log(
+    'Rendering App.tsx with authStatus:' + authStatus + ', accessToken:',
+    accessToken
+  )
+
+  if (authStatus === 'authenticated' && !accessToken) {
+    fetchAuthSession().then((session) => {
+      setAccessToken(session.tokens?.accessToken.toString())
+    })
+  }
+
   return (
     <Authenticator>
-      {({ signOut, user }) => (
-        <main>
-          <h1>Hello {user?.username}</h1>
-          <button onClick={signOut}>Sign out</button>
+      {accessToken ? (
+        <ApolloProvider client={getApolloClient(accessToken)}>
+          <Header />
           <Main />
-        </main>
-      )}
+          <footer className='App-footer' />
+        </ApolloProvider>
+      ) : null}
     </Authenticator>
   )
 }

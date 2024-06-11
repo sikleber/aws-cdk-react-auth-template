@@ -73,10 +73,6 @@ export class BackendStack extends cdk.Stack {
       value: this.graphqlApi.graphqlUrl
     })
 
-    new cdk.CfnOutput(this, 'AppGraphqlApiKey', {
-      value: this.graphqlApi.apiKey || ''
-    })
-
     new cdk.CfnOutput(this, 'AppGraphqlApiRegion', {
       value: this.graphqlApi.env.region
     })
