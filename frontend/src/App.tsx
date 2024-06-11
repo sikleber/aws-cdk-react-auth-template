@@ -92,11 +92,6 @@ const App: React.FunctionComponent = (): ReactElement => {
   const { authStatus } = useAuthenticator((context) => [context.authStatus])
   const [accessToken, setAccessToken] = React.useState<string | undefined>()
 
-  console.log(
-    'Rendering App.tsx with authStatus:' + authStatus + ', accessToken:',
-    accessToken
-  )
-
   if (authStatus === 'authenticated' && !accessToken) {
     fetchAuthSession().then((session) => {
       setAccessToken(session.tokens?.accessToken.toString())
@@ -107,9 +102,11 @@ const App: React.FunctionComponent = (): ReactElement => {
     <Authenticator>
       {accessToken ? (
         <ApolloProvider client={getApolloClient(accessToken)}>
-          <Header />
-          <Main />
-          <footer className='App-footer' />
+          <div className='App'>
+            <Header />
+            <Main />
+            <footer className='App-footer' />
+          </div>
         </ApolloProvider>
       ) : null}
     </Authenticator>

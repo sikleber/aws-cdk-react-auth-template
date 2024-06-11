@@ -9,8 +9,6 @@ const Main: React.FunctionComponent = (): ReactElement => {
   const { username } = useAuthenticator((context) => [context.user])
   const [getHello, { error, data }] = useLazyQuery(GET_HELLO)
 
-  console.log('Main component rendered')
-
   let helloTxt = 'Click the button to call the API'
   if (error) {
     helloTxt = `Error! ${error.message}`
