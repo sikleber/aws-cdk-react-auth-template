@@ -94,6 +94,7 @@ const App: React.FunctionComponent = (): ReactElement => {
 
   if (authStatus === 'authenticated' && !accessToken) {
     fetchAuthSession().then((session) => {
+      console.log(session.tokens?.idToken?.toString())
       setAccessToken(session.tokens?.accessToken.toString())
     })
   }

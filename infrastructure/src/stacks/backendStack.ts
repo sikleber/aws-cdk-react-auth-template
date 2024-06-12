@@ -7,8 +7,6 @@ import { AuthStack } from './authStack'
 import { AppGraphqlApi } from '../constructs/appGraphqlApi'
 import { AppRestApi } from '../constructs/appRestApi'
 
-const PROJECT_ROOT = `${__dirname}/../../..`
-
 export class BackendStack extends cdk.Stack {
   public readonly graphqlApi: appsync.GraphqlApi
   public readonly restApi: apigateway.RestApi
@@ -23,7 +21,6 @@ export class BackendStack extends cdk.Stack {
     super(scope, id, props)
 
     this.graphqlApi = new AppGraphqlApi(this, {
-      schemaFilePath: `${PROJECT_ROOT}/graphql/schema.graphql`,
       authUserPool: authStack.userPool,
       authUserPoolClient: authStack.userPoolClient,
       logRetentionDays: config.logRetentionDays

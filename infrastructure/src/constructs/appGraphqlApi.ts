@@ -1,10 +1,13 @@
 import { Construct } from 'constructs'
 import * as appsync from 'aws-cdk-lib/aws-appsync'
+import * as nodejs from 'aws-cdk-lib/aws-lambda-nodejs'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
 
+const PROJECT_ROOT = `${__dirname}/../../..`
+const BACKEND_ROOT = `${PROJECT_ROOT}/backend`
+
 export interface AppGraphqlApiProps {
-  schemaFilePath: string
   authUserPool: cognito.UserPool
   authUserPoolClient: cognito.UserPoolClient
   logRetentionDays: number
@@ -14,7 +17,9 @@ export class AppGraphqlApi extends appsync.GraphqlApi {
   constructor(scope: Construct, props: AppGraphqlApiProps) {
     super(scope, 'AppGraphqlApi', {
       name: 'react-app-graphql-api',
-      definition: appsync.Definition.fromFile(props.schemaFilePath),
+      definition: appsync.Definition.fromFile(
+        `${PROJECT_ROOT}/graphql/schema.graphql`
+      ),
       authorizationConfig: {
         defaultAuthorization: {
           authorizationType: appsync.AuthorizationType.USER_POOL,
@@ -35,15 +40,12 @@ export class AppGraphqlApi extends appsync.GraphqlApi {
       }
     })
 
-    const lambdaResolver = new lambda.Function(scope, 'LambdaResolver', {
-      runtime: lambda.Runtime.NODEJS_20_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromInline(`
-        exports.handler = async (event, context) => {
-          const username = event.identity.username
-          return \`Hello \${username} from backend handler!\`
-        }
-      `)
+    const lambdaResolver = new nodejs.NodejsFunction(scope, 'LambdaResolver', {
+      entry: `${BACKEND_ROOT}/src/graphql/hello_resolver.ts`,
+      handler: 'handler',
+      projectRoot: BACKEND_ROOT,
+      depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`,
+      architecture: lambda.Architecture.ARM_64
     })
 
     const lambdaDataSource = this.addLambdaDataSource(

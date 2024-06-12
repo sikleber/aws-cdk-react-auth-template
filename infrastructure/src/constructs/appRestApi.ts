@@ -2,6 +2,10 @@ import { Construct } from 'constructs'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
 import * as apigateway from 'aws-cdk-lib/aws-apigateway'
+import * as nodejs from 'aws-cdk-lib/aws-lambda-nodejs'
+
+const PROJECT_ROOT = `${__dirname}/../../..`
+const BACKEND_ROOT = `${PROJECT_ROOT}/backend`
 
 export interface AppRestApiProps {
   authUserPool: cognito.UserPool
@@ -25,16 +29,17 @@ export class AppRestApi extends apigateway.RestApi {
       }
     })
 
-    const handlerLambda = new lambda.Function(scope, 'HandlerLambda', {
-      runtime: lambda.Runtime.NODEJS_20_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromInline(`
-        exports.handler = async (event, context) => {
-          const username = event.identity.username
-          return \`Hello \${username} from backend handler!\`
-        }
-      `)
-    })
+    const handlerLambda = new nodejs.NodejsFunction(
+      scope,
+      'LambdaRestHandler',
+      {
+        entry: `${BACKEND_ROOT}/src/rest/hello_handler.ts`,
+        handler: 'handler',
+        architecture: lambda.Architecture.ARM_64,
+        projectRoot: BACKEND_ROOT,
+        depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`
+      }
+    )
 
     const handlerResource = this.root.addResource('hello')
     handlerResource.addMethod(
