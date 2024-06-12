@@ -19,8 +19,7 @@ export class AppRestApi extends apigateway.RestApi {
           scope,
           'CognitoUserPoolsAuthorizer',
           {
-            cognitoUserPools: [props.authUserPool],
-            identitySource: 'method.request.header.Authorization'
+            cognitoUserPools: [props.authUserPool]
           }
         )
       }
