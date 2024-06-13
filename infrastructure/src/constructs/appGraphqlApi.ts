@@ -1,7 +1,6 @@
 import { Construct } from 'constructs'
 import * as appsync from 'aws-cdk-lib/aws-appsync'
 import * as nodejs from 'aws-cdk-lib/aws-lambda-nodejs'
-import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
 
 const PROJECT_ROOT = `${__dirname}/../../..`
