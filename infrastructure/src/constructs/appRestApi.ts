@@ -1,10 +1,12 @@
 import { Construct } from 'constructs'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
+import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as apigateway from 'aws-cdk-lib/aws-apigateway'
 import * as nodejs from 'aws-cdk-lib/aws-lambda-nodejs'
+import * as path from 'path'
 
-const PROJECT_ROOT = `${__dirname}/../../..`
-const BACKEND_ROOT = `${PROJECT_ROOT}/backend`
+const PROJECT_ROOT = path.join(__dirname, '..', '..', '..')
+const BACKEND_ROOT = path.join(PROJECT_ROOT, 'backend')
 
 export interface AppRestApiProps {
   authUserPool: cognito.UserPool
@@ -32,10 +34,14 @@ export class AppRestApi extends apigateway.RestApi {
       scope,
       'LambdaRestHandler',
       {
-        entry: `${BACKEND_ROOT}/src/rest/hello_handler.ts`,
+        runtime: lambda.Runtime.NODEJS_20_X,
+        entry: path.join(BACKEND_ROOT, 'src/rest/hello_handler.ts'),
         handler: 'handler',
         projectRoot: BACKEND_ROOT,
-        depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`
+        depsLockFilePath: path.join(BACKEND_ROOT, 'package-lock.json'),
+        bundling: {
+          externalModules: ['jsonwebtoken']
+        }
       }
     )
 

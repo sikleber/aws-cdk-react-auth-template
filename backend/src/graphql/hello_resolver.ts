@@ -1,18 +1,14 @@
-import { Context, APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda'
-import * as jwt from 'jsonwebtoken'
+import {
+  Context,
+  AppSyncResolverEvent,
+  AppSyncIdentityCognito
+} from 'aws-lambda'
 
-export const handler = async (
-  event: APIGatewayEvent,
+export const handler = (
+  event: AppSyncResolverEvent<never>,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   context: Context
-): Promise<APIGatewayProxyResult> => {
-  const authToken = event.headers['Authorization'] as string
-  const decoded = jwt.decode(authToken)
-  const username = '...'
-  console.log(decoded)
-
-  return {
-    statusCode: 200,
-    body: `Hello ${username} from backend handler!`
-  }
+): string => {
+  const identity = event.identity as AppSyncIdentityCognito
+  return `Hello ${identity.username} from backend handler!`
 }

@@ -1,10 +1,12 @@
 import { Construct } from 'constructs'
 import * as appsync from 'aws-cdk-lib/aws-appsync'
 import * as nodejs from 'aws-cdk-lib/aws-lambda-nodejs'
+import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
+import * as path from 'path'
 
-const PROJECT_ROOT = `${__dirname}/../../..`
-const BACKEND_ROOT = `${PROJECT_ROOT}/backend`
+const PROJECT_ROOT = path.join(__dirname, '..', '..', '..')
+const BACKEND_ROOT = path.join(PROJECT_ROOT, 'backend')
 
 export interface AppGraphqlApiProps {
   authUserPool: cognito.UserPool
@@ -40,10 +42,11 @@ export class AppGraphqlApi extends appsync.GraphqlApi {
     })
 
     const lambdaResolver = new nodejs.NodejsFunction(scope, 'LambdaResolver', {
-      entry: `${BACKEND_ROOT}/src/graphql/hello_resolver.ts`,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      entry: path.join(BACKEND_ROOT, 'src/graphql/hello_resolver.ts'),
       handler: 'handler',
       projectRoot: BACKEND_ROOT,
-      depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`
+      depsLockFilePath: path.join(BACKEND_ROOT, 'package-lock.json')
     })
 
     const lambdaDataSource = this.addLambdaDataSource(
