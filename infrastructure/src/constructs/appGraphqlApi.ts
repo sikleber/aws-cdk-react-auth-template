@@ -44,8 +44,7 @@ export class AppGraphqlApi extends appsync.GraphqlApi {
       entry: `${BACKEND_ROOT}/src/graphql/hello_resolver.ts`,
       handler: 'handler',
       projectRoot: BACKEND_ROOT,
-      depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`,
-      architecture: lambda.Architecture.ARM_64
+      depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`
     })
 
     const lambdaDataSource = this.addLambdaDataSource(

@@ -7,7 +7,7 @@ on:
 
 jobs:
   test-infrastructure:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: infrastructure
@@ -44,7 +44,7 @@ jobs:
         run: cdk synth -c config=dev
 
   test-frontend:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend

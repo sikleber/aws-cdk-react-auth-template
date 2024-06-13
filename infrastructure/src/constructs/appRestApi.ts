@@ -35,7 +35,6 @@ export class AppRestApi extends apigateway.RestApi {
       {
         entry: `${BACKEND_ROOT}/src/rest/hello_handler.ts`,
         handler: 'handler',
-        architecture: lambda.Architecture.ARM_64,
         projectRoot: BACKEND_ROOT,
         depsLockFilePath: `${BACKEND_ROOT}/package-lock.json`
       }
