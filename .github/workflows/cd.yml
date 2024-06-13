@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-infrastructure:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     defaults:
       run:
         working-directory: infrastructure
@@ -75,7 +75,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
 
   build-and-deploy-frontend:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: [ deploy-infrastructure ]
     defaults:
       run:
