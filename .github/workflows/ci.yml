@@ -37,6 +37,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Upload Backend node_modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-node-modules
+          path: backend/node_modules
+
   test-infrastructure:
     runs-on: ubuntu-latest
     defaults:
@@ -70,6 +76,12 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Download Backend node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-node-modules
+          path: backend/node_modules
 
       - name: CDK Synth
         run: cdk synth -c config=dev

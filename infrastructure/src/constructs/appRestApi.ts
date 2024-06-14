@@ -39,9 +39,6 @@ export class AppRestApi extends apigateway.RestApi {
         handler: 'handler',
         projectRoot: BACKEND_ROOT,
         depsLockFilePath: path.join(BACKEND_ROOT, 'package-lock.json'),
-        bundling: {
-          externalModules: ['jsonwebtoken']
-        }
       }
     )
 
