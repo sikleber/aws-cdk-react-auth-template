@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import './Main.css'
+import './Header.css'
 import { useAuthenticator } from '@aws-amplify/ui-react'
 
 const Header: React.FunctionComponent = (): ReactElement => {

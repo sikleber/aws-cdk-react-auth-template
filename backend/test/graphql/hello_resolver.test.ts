@@ -9,6 +9,6 @@ describe('HelloResolver', () => {
       }
     } as AppSyncResolverEvent<never>
     const result = await handler(event)
-    expect(result).toBe('Hello user from backend handler!')
+    expect(result).toBe('Hello user from Graphql backend handler!')
   })
 })

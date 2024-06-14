@@ -13,6 +13,6 @@ describe('HelloResolver', () => {
     const result = await handler(event)
     expect(result).toBeDefined()
     expect(result.statusCode).toBe(200)
-    expect(result.body).toMatch('Hello skleber from backend handler!')
+    expect(result.body).toMatch('Hello skleber from REST backend handler!')
   })
 })
