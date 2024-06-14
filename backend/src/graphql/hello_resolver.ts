@@ -1,14 +1,8 @@
-import {
-  Context,
-  AppSyncResolverEvent,
-  AppSyncIdentityCognito
-} from 'aws-lambda'
+import { AppSyncResolverEvent, AppSyncIdentityCognito } from 'aws-lambda'
 
-export const handler = (
-  event: AppSyncResolverEvent<never>,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  context: Context
-): string => {
+export const handler = async (
+  event: AppSyncResolverEvent<never>
+): Promise<string> => {
   const identity = event.identity as AppSyncIdentityCognito
   return `Hello ${identity.username} from backend handler!`
 }

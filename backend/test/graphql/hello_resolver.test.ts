@@ -1,4 +1,4 @@
-import { Context, AppSyncResolverEvent } from 'aws-lambda'
+import { AppSyncResolverEvent } from 'aws-lambda'
 import { handler } from '../../src/graphql/hello_resolver'
 
 describe('HelloResolver', () => {
@@ -8,8 +8,7 @@ describe('HelloResolver', () => {
         username: 'user'
       }
     } as AppSyncResolverEvent<never>
-    const context = {} as Context
-    const result = handler(event, context)
+    const result = await handler(event)
     expect(result).toBe('Hello user from backend handler!')
   })
 })

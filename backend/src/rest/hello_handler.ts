@@ -1,11 +1,9 @@
-import { Context, APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda'
+import { APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda'
 import * as jwt from 'jsonwebtoken'
 
-export const handler = (
-  event: APIGatewayEvent,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  context: Context
-): APIGatewayProxyResult => {
+export const handler = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
   const authToken = event.headers['Authorization'] as string
   const decoded = jwt.decode(authToken) as jwt.JwtPayload
 
