@@ -160,7 +160,7 @@ jobs:
           echo "COGNITO_REGION=$(jq -r '.AuthStack.CognitoRegion' cdk-outputs.json)" >> .env.build
           echo "GRAPHQL_API_ENDPOINT=$(jq -r '.BackendStack.AppGraphqlApiUrl' cdk-outputs.json)" >> .env.build
           echo "GRAPHQL_API_REGION=$(jq -r '.BackendStack.AppGraphqlApiRegion' cdk-outputs.json)" >> .env.build
-          echo "REST_API_URL=$(jq -r '.BackendStack.AppRestApiUrl' cdk-outputs.json)" >> .env.build
+          echo "REST_API_ENDPOINT=$(jq -r '.BackendStack.AppRestApiUrl' cdk-outputs.json)" >> .env.build
 
       - name: Build
         run: npm run build

@@ -7,7 +7,7 @@ const Header: React.FunctionComponent = (): ReactElement => {
 
   return (
     <header className='App-header'>
-      <h1>Amplify GraphQL API</h1>
+      <h1>React App Authentication Template</h1>
       <button onClick={signOut}>Sign out</button>
     </header>
   )
