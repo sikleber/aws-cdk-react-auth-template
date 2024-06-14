@@ -38,7 +38,7 @@ export class AppRestApi extends apigateway.RestApi {
         entry: path.join(BACKEND_ROOT, 'src/rest/hello_handler.ts'),
         handler: 'handler',
         projectRoot: BACKEND_ROOT,
-        depsLockFilePath: path.join(BACKEND_ROOT, 'package-lock.json'),
+        depsLockFilePath: path.join(BACKEND_ROOT, 'package-lock.json')
       }
     )
 
