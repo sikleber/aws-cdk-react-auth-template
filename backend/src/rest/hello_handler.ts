@@ -7,13 +7,10 @@ export const handler = (
   context: Context
 ): APIGatewayProxyResult => {
   const authToken = event.headers['Authorization'] as string
-  const decoded = jwt.decode(authToken)
-  console.log(decoded)
+  const decoded = jwt.decode(authToken) as jwt.JwtPayload
 
-  const username = 'user'
-  // Todo
   return {
     statusCode: 200,
-    body: `Hello ${username} from backend handler!`
+    body: `Hello ${decoded['cognito:username']} from backend handler!`
   }
 }
