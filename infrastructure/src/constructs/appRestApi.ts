@@ -27,6 +27,10 @@ export class AppRestApi extends apigateway.RestApi {
             cognitoUserPools: [props.authUserPool]
           }
         )
+      },
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        allowMethods: apigateway.Cors.ALL_METHODS
       }
     })
 

@@ -15,6 +15,7 @@ import { fetchAuthSession } from 'aws-amplify/auth'
 import { AUTH_TYPE, AuthOptions, createAuthLink } from 'aws-appsync-auth-link'
 import { Amplify } from 'aws-amplify'
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link'
+import axios from 'axios'
 
 const userPoolId = process.env.COGNITO_USER_POOL_ID
 const userPoolClientId = process.env.COGNITO_USER_POOL_CLIENT_ID
@@ -94,8 +95,10 @@ const App: React.FunctionComponent = (): ReactElement => {
 
   if (authStatus === 'authenticated' && !accessToken) {
     fetchAuthSession().then((session) => {
-      console.log(session.tokens?.idToken?.toString())
-      setAccessToken(session.tokens?.accessToken.toString())
+      // get ID token for REST and access token for GraphQL
+      axios.defaults.headers.common['Authorization'] =
+        session.tokens?.idToken?.toString()
+      setAccessToken(session.tokens?.accessToken?.toString())
     })
   }
 

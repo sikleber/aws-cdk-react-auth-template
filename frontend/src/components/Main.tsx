@@ -1,27 +1,21 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import logo from '../logo.svg'
 import './Main.css'
 import { useAuthenticator } from '@aws-amplify/ui-react'
-import { useLazyQuery } from '@apollo/client'
-import { GET_HELLO } from '../graphql/queries'
+import GraphqlApiButton from './GraphqlApiButton'
+import RestApiButton from './RestApiButton'
 
 const Main: React.FunctionComponent = (): ReactElement => {
-  const { username } = useAuthenticator((context) => [context.user])
-  const [getHello, { error, data }] = useLazyQuery(GET_HELLO)
-
-  let helloTxt = 'Click the button to call the API'
-  if (error) {
-    helloTxt = `Error! ${error.message}`
-  } else if (data) {
-    helloTxt = data.getHello
-  }
+  const { user } = useAuthenticator((context) => [context.user])
+  const [message, setMessage] = useState('')
 
   return (
     <div className='App-main'>
-      <h3>Hello {username}</h3>
+      <h3>Hello {user.username}</h3>
       <img src={logo} className='App-logo' alt='logo' />
-      <p>{helloTxt}</p>
-      <button onClick={() => getHello()}>Call API</button>
+      <RestApiButton updateMessage={setMessage} />
+      <GraphqlApiButton updateMessage={setMessage} />
+      <p>{message}</p>
     </div>
   )
 }

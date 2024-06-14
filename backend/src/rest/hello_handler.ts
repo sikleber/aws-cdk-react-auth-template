@@ -9,6 +9,6 @@ export const handler = async (
 
   return {
     statusCode: 200,
-    body: `Hello ${decoded['cognito:username']} from backend handler!`
+    body: `Hello ${decoded['cognito:username']} from REST backend handler!`
   }
 }
