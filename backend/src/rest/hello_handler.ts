@@ -9,6 +9,10 @@ export const handler = async (
 
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+      'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+    },
     body: `Hello ${decoded['cognito:username']} from REST backend handler!`
   }
 }
