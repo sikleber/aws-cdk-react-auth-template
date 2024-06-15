@@ -80,12 +80,13 @@ function getApolloClient(
 
   return new ApolloClient({
     link: appsyncLink,
-    cache: new InMemoryCache(),
-    defaultOptions: {
-      watchQuery: {
-        fetchPolicy: 'cache-first'
-      }
-    }
+    cache: new InMemoryCache()
+    // use this for real data:
+    // defaultOptions: {
+    //   watchQuery: {
+    //     fetchPolicy: 'cache-first'
+    //   }
+    // }
   })
 }
 

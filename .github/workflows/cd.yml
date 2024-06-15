@@ -191,4 +191,4 @@ jobs:
         run: |
           CLOUDFRONT_DOMAIN=$(jq -r '.ReactAppStack.ReactAppDistributionDomainName' cdk-outputs.json)
           echo "## Frontend Deployment Success! :sparkles:" >> $GITHUB_STEP_SUMMARY
-          echo "### Domain: $CLOUDFRONT_DOMAIN" >> $GITHUB_STEP_SUMMARY
+          echo "### APP: https://$CLOUDFRONT_DOMAIN" >> $GITHUB_STEP_SUMMARY
