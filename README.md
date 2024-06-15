@@ -23,8 +23,25 @@ The frontend uses the [Amplify Frontend SDK](https://docs.amplify.aws/react/) to
 
 See [Amplify Custom Configuration](https://docs.amplify.aws/react/reference/amplify_outputs/#custom-configuration) for more information on how to use the SDK without the Amplify CLI or Amplify Console.
 
+### API Calls
+Apart from the Amplify SDK, the frontend implements initial **REST** and **GraphQL** API calls using **Axios** and **Apollo** Client.
+Both are configured with tokens provided by the Amplify authentication.
+
+#### REST API
+No specific configuration is implemented to call the REST API.
+The simple Axios get request can be seen in the [RestApiButton.tsx](frontend/src/components/RestApiButton.tsx) component.
+The ID token is set universally within the header in the [App.tsx](frontend/src/App.tsx) component.
+
+#### GraphQL API
+The GraphQL schema is defined in the [graphql/schema.graphql](graphql/schema.graphql) file and client queries are defined for the [frontend](frontend/src/graphql/queries.ts) and [backend](frontend/src/graphql/queries.ts).
+When changing the schema or queries, the code generation can be triggered using the `npm run codegen` command.
+The generated query is used in the [GraphQLApiButton.tsx](frontend/src/components/GraphqlApiButton.tsx) component.
+The access token is set within the Apollo Client configuration in the [App.tsx](frontend/src/App.tsx) component.
+
 ## Infrastructure Project
 See the [infrastructure package.json](infrastructure/package.json) for relevant scripts.
+To serve backend requests, a simple backend project is implemented also in TypeScript for two Lambda functions.
+See the [backend/src](backend/src) directory for the implementation.
 
 Deploy the infrastructure using the following commands:
 ```bash
