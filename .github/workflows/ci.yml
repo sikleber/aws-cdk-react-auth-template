@@ -59,6 +59,12 @@ jobs:
           cache: npm
           cache-dependency-path: infrastructure/package-lock.json
 
+      - name: Download Backend node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-node-modules
+          path: backend/node_modules
+
       - name: Install AWS CLI
         run: npm install -g aws-cdk
 
@@ -76,12 +82,6 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Download Backend node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-node-modules
-          path: backend/node_modules
 
       - name: CDK Synth
         run: cdk synth -c config=dev

@@ -70,6 +70,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Download Backend node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-node-modules
+          path: backend/node_modules
+
       - name: Install
         run: npm install
 
@@ -84,12 +90,6 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Download Backend node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-node-modules
-          path: backend/node_modules
 
       - name: CDK Deploy
         run: |
