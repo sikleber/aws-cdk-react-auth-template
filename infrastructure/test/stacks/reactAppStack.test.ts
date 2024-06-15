@@ -63,14 +63,34 @@ describe('CloudFront Distribution', () => {
   })
 })
 
-describe('Template Output', () => {
-  it('should contain a CloudFront distribution domain name output', () => {
+describe('CDK Outputs', () => {
+  it('should count 3 outputs', () => {
+    expect(Object.keys(template.findOutputs('*')).length).toBe(3)
+  })
+
+  it('should output the Deployment Bucket Name', () => {
+    template.hasOutput('ReactAppDeploymentBucketName', {
+      Value: {
+        Ref: Match.stringLikeRegexp('ReactAppDeploymentBucket*')
+      }
+    })
+  })
+
+  it('should output the CloudFront Distribution Domain Name', () => {
     template.hasOutput('ReactAppDistributionDomainName', {
       Value: {
         'Fn::GetAtt': [
           Match.stringLikeRegexp('ReactAppDistribution*'),
           'DomainName'
         ]
+      }
+    })
+  })
+
+  it('should output the CloudFront Distribution ID', () => {
+    template.hasOutput('ReactAppDistributionId', {
+      Value: {
+        Ref: Match.stringLikeRegexp('ReactAppDistribution*')
       }
     })
   })

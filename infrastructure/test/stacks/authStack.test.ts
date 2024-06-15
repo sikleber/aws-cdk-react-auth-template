@@ -37,20 +37,6 @@ describe('User Pool', () => {
       UpdateReplacePolicy: 'Delete'
     })
   })
-  it('should output the User Pool ID', () => {
-    template.hasOutput('CognitoUserPoolId', {
-      Value: {
-        Ref: Match.stringLikeRegexp('AppUserPool*')
-      }
-    })
-  })
-  it('should output the stack region', () => {
-    template.hasOutput('CognitoRegion', {
-      Value: {
-        Ref: 'AWS::Region'
-      }
-    })
-  })
 })
 
 describe('User Pool Client', () => {
@@ -78,11 +64,33 @@ describe('User Pool Client', () => {
       }
     })
   })
+})
+
+describe('CDK Outputs', () => {
+  it('should count 3 outputs', () => {
+    expect(Object.keys(template.findOutputs('*')).length).toBe(3)
+  })
 
   it('should output the User Pool Client ID', () => {
     template.hasOutput('CognitoUserPoolClientId', {
       Value: {
         Ref: Match.stringLikeRegexp('AppUserPoolWebClient*')
+      }
+    })
+  })
+
+  it('should output the User Pool ID', () => {
+    template.hasOutput('CognitoUserPoolId', {
+      Value: {
+        Ref: Match.stringLikeRegexp('AppUserPool*')
+      }
+    })
+  })
+
+  it('should output the stack region', () => {
+    template.hasOutput('CognitoRegion', {
+      Value: {
+        Ref: 'AWS::Region'
       }
     })
   })

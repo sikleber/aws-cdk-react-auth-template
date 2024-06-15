@@ -39,9 +39,5 @@ export class BackendStack extends cdk.Stack {
       authUserPoolClient: authStack.userPoolClient,
       logRetentionDays: config.logRetentionDays
     })
-
-    new cdk.CfnOutput(this, 'AppRestApiUrl', {
-      value: this.restApi.url
-    })
   }
 }
