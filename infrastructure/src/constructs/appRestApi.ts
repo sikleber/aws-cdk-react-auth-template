@@ -31,8 +31,7 @@ export class AppRestApi extends apigateway.RestApi {
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS
-      },
-      endpointExportName: 'AppRestApiUrl'
+      }
     })
 
     const handlerLambda = new nodejs.NodejsFunction(
